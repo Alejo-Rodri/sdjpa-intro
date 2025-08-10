@@ -1,7 +1,7 @@
-drop table if exists books;
-drop table if exists books_seq;
+drop table if exists book;
+drop table if exists book_seq;
 
-create table books (
+create table book (
     id bigint not null,
     isbn varchar(255),
     publisher varchar(255),
@@ -9,8 +9,8 @@ create table books (
     primary key (id)
 ) engine=InnoDB;
 
-create table books_seq (
+create table book_seq (
     next_val bigint
 ) engine=InnoDB;
 
-insert into books_seq values ( 1 );
+insert into book_seq values ( 1 );
