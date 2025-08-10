@@ -1,24 +1,27 @@
 package guru.springframework.sdjpaintro.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 
+import java.sql.Types;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
-public class Author {
+public class AuthorUuid {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    // this annotation tells hibernate that the ID will be stored as a string in the db
+    @JdbcTypeCode(value = Types.VARCHAR)
+    // gives info about the column, restrictions to follow
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
+    private UUID id;
     private String firstName;
     private String lastName;
 
-    public Author() {
-    }
+    public AuthorUuid() {}
 
-    public Author(Long id, String firstName, String lastName) {
+    public AuthorUuid(UUID id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,8 +31,8 @@ public class Author {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        Author author = (Author) o;
-        return Objects.equals(id, author.id);
+        AuthorUuid that = (AuthorUuid) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
@@ -39,18 +42,18 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
+        return "AuthorUuid{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

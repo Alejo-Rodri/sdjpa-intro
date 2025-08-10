@@ -1,43 +1,38 @@
 package guru.springframework.sdjpaintro.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
+import java.util.UUID;
 
-// una entidad representa una tabla en la base de datos relacional
 @Entity
-public class Book {
-    // anotacion para especificar la clave primaria
+public class BookUuid {
     @Id
-    // AUTO es el valor por defecto cuando no se especifica nada
-    // IDENTITY es el AUTO_INCREMENT de la base de datos
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+    private UUID id;
 
     private String title;
     private String isbn;
     private String publisher;
-    private Long authorId;
 
-    public Book() {
+    public BookUuid() {
     }
 
-    public Book(String title, String isbn, String publisher, Long authorId) {
+    public BookUuid(String title, String isbn, String publisher) {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
-        this.authorId = authorId;
     }
 
-    // definir la igualdad
-    // sobreescribir esto no es necesario pero es una buena practica
-    // porque en un futuro si al realizar cosas complejas los objetos se pueden comportar inesperadamente
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        Book book = (Book) o;
-        return Objects.equals(id, book.id);
+        BookUuid bookUuid = (BookUuid) o;
+        return Objects.equals(id, bookUuid.id);
     }
 
     @Override
@@ -47,19 +42,19 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "BookUuid{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
+                ", publisher='" + publisher +
                 '}';
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -85,13 +80,5 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
     }
 }

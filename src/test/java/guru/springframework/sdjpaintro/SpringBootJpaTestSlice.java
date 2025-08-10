@@ -35,7 +35,6 @@ public class SpringBootJpaTestSlice {
     @Test
     void testJpaTestSplice() {
         long countBefore = bookRepository.count();
-        // we expect nothing to be initialized
         assertThat(countBefore).isEqualTo(2);
 
         // the values don't care
@@ -50,7 +49,6 @@ public class SpringBootJpaTestSlice {
     @Test
     void testJpaTestSpliceTransaction() {
         long countBefore = bookRepository.count();
-        // we expect nothing to be initialized
         assertThat(countBefore).isEqualTo(3);
     }
 }
